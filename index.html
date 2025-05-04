@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn - Professional Network</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">LinkedIn</a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#ai">AI Tools</a>
+                <a href="#video">Video Resume</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Welcome to LinkedIn</h1>
+                <p>Your professional network with AI-powered features and modern tools for career growth.</p>
+                <a href="#features" class="btn">Explore Features</a>
+            </div>
+            <div class="profile-showcase">
+                <img src="https://media.licdn.com/dms/image/v2/D4E03AQH5gL9W0rjckQ/profile-displayphoto-shrink_400_400/B4EZZdKhkvHoAg-/0/1745319769578?e=1751500800&v=beta&t=a2uifvbJwKQOfwBGI9Eq25U3nV56K2brqpdI0WPQlDw" alt="Profile Photo" class="profile-image">
+                <h2 class="profile-name">Arya Urkude</h2>
+                <p class="profile-title">CSE Undergrad | CIL scholar</p>
+                <a href="https://www.linkedin.com/in/arya-urkude" target="_blank" style="text-decoration: none; color: #0a66c2; display: block; margin-bottom: 1rem;">
+                    View LinkedIn Profile
+                </a>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Connections</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Posts</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Profile Strength</div>
+                    </div>
+                </div>
+
+                <div class="profile-badges">
+                    <span class="badge">
+                        <i>🎓</i>
+                        Top Student
+                    </span>
+                    <span class="badge">
+                        <i>💡</i>
+                        Innovator
+                    </span>
+                </div>
+
+                <button class="connect-btn">Connect with Me</button>
+            </div>
+        </div>
+
+        <div class="features" id="features">
+            <div class="feature-card" onclick="window.location.href='resume-builder.html'">
+                <h3>🤖 AI-Powered Resume Builder</h3>
+                <p>Let our AI create the perfect resume based on your experience and skills.</p>
+                <button class="btn">Try Now</button>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='job-recommender.html'">
+                <h3>🧠 Smart Job Recommender</h3>
+                <p>Get personalized job recommendations based on your profile and interests.</p>
+                <button class="btn">Find Jobs</button>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='goal-tracker.html'">
+                <h3>🎯 Career Goal Tracker</h3>
+                <p>Set and track your professional goals with our interactive roadmap.</p>
+                <button class="btn">Set Goals</button>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='skills-assessment.html'">
+                <h3>🏆 Skills Assessment Hub</h3>
+                <p>Validate your skills through interactive challenges and earn verified badges.</p>
+                <div class="badge-preview">
+                    <span class="mini-badge">Python</span>
+                    <span class="mini-badge">React</span>
+                    <span class="mini-badge">Leadership</span>
+                </div>
+                <button class="btn">Take Assessment</button>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='networking.html'">
+                <h3>🤝 Smart Networking</h3>
+                <p>Connect with professionals who align with your career goals using AI matching.</p>
+                <div class="connection-preview">
+                    <span class="connection-stat">85% match with your interests</span>
+                </div>
+                <button class="btn">Find Connections</button>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='analytics.html'">
+                <h3>📊 Career Analytics</h3>
+                <p>Get data-driven insights about your career growth and industry trends.</p>
+                <div class="analytics-preview">
+                    <div class="mini-chart">📈</div>
+                    <span class="trend-stat">+25% skill growth</span>
+                </div>
+                <button class="btn">View Insights</button>
+            </div>
+        </div>
+
+        <div class="ai-section" id="ai">
+            <div class="feature-card">
+                <h3>AI Assistant</h3>
+                <p>Chat with our AI to get career advice and resume tips.</p>
+                <div class="ai-chat">
+                    <div class="chat-message">Hi! I'm your AI career assistant. How can I help you today?</div>
+                    <input type="text" placeholder="Type your message...">
+                </div>
+            </div>
+        </div>
+
+        <div class="video-section" id="video">
+            <div class="feature-card">
+                <h3>📹 Video Resume</h3>
+                <p>Create a professional video introduction to stand out.</p>
+                <div class="video-demo">
+                    <button class="mic-button">🎤</button>
+                    <p>Click to start recording your video resume</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html> 
