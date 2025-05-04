@@ -6,106 +6,77 @@
     <title>LinkedIn - AI Features</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .ai-features-grid {
+        .ai-features {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            margin-top: 2rem;
         }
 
-        .ai-feature-card {
+        .feature-card {
             background: white;
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .ai-feature-card:hover {
+        .feature-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
-        .ai-feature-icon {
+        .feature-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            color: var(--primary-color);
         }
 
-        .ai-feature-title {
-            color: #0a66c2;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .ai-feature-description {
-            color: #666;
-            line-height: 1.5;
+        .feature-card h3 {
+            color: var(--primary-color);
             margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
 
-        .ai-feature-benefits {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+        .feature-card p {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
 
-        .ai-feature-benefits li {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .feature-benefits {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .feature-benefits li {
             margin-bottom: 0.5rem;
-            color: #333;
+            color: var(--text-color);
         }
 
-        .ai-feature-benefits li::before {
-            content: "✓";
-            color: #057642;
-            font-weight: bold;
+        .feature-cta {
+            margin-top: 1.5rem;
         }
 
-        .ai-feature-cta {
-            margin-top: auto;
+        .feature-cta .btn {
+            width: 100%;
             text-align: center;
         }
 
-        .back-to-home {
-            display: inline-block;
-            margin: 1rem;
-            padding: 0.5rem 1rem;
-            background-color: #0a66c2;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .back-to-home:hover {
-            background-color: #004182;
-        }
-
         @media (max-width: 768px) {
-            .ai-features-grid {
+            .ai-features {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .feature-grid {
                 grid-template-columns: 1fr;
-                padding: 1rem;
-                gap: 1rem;
-            }
-
-            .ai-feature-card {
-                padding: 1rem;
-            }
-
-            .ai-feature-icon {
-                font-size: 2rem;
-            }
-
-            .ai-feature-title {
-                font-size: 1.2rem;
             }
         }
     </style>
@@ -116,112 +87,76 @@
             <a href="index.html" class="logo">LinkedIn</a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="#features">Features</a>
-                <a href="#video">Video Resume</a>
+                <a href="ai-features.html">AI Tools</a>
+                <a href="goal-tracker.html">Goal Tracker</a>
+                <a href="interview-coach.html">Interview Coach</a>
+                <a href="network-optimizer.html">Network Optimizer</a>
+                <a href="career-path.html">Career Path</a>
             </div>
         </nav>
     </header>
 
-    <main>
-        <div class="ai-features-grid">
-            <!-- AI Resume Builder -->
-            <div class="ai-feature-card">
-                <div class="ai-feature-icon">🤖</div>
-                <h3 class="ai-feature-title">AI Resume Builder</h3>
-                <p class="ai-feature-description">Create professional resumes tailored to job descriptions using advanced AI algorithms.</p>
-                <ul class="ai-feature-benefits">
-                    <li>Customized content generation</li>
-                    <li>ATS optimization</li>
-                    <li>Real-time suggestions</li>
-                    <li>Multiple format exports</li>
+    <main class="ai-features">
+        <h1>AI-Powered Career Tools</h1>
+        <p>Enhance your professional journey with our intelligent career tools.</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Goal Tracker</h3>
+                <p>Set and track your career goals with AI-powered insights and recommendations.</p>
+                <ul class="feature-benefits">
+                    <li>Smart goal setting and tracking</li>
+                    <li>Personalized milestone suggestions</li>
+                    <li>Progress analytics and insights</li>
                 </ul>
-                <div class="ai-feature-cta">
-                    <button class="btn">Try Now</button>
+                <div class="feature-cta">
+                    <a href="goal-tracker.html" class="btn">Try Goal Tracker</a>
                 </div>
             </div>
 
-            <!-- Smart Job Matcher -->
-            <div class="ai-feature-card">
-                <div class="ai-feature-icon">🎯</div>
-                <h3 class="ai-feature-title">Smart Job Matcher</h3>
-                <p class="ai-feature-description">Get personalized job recommendations based on your skills and preferences.</p>
-                <ul class="ai-feature-benefits">
-                    <li>Personalized job matches</li>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>AI Interview Coach</h3>
+                <p>Practice your interview skills with our intelligent coaching system.</p>
+                <ul class="feature-benefits">
+                    <li>Real-time feedback on responses</li>
+                    <li>Customized interview scenarios</li>
+                    <li>Performance analytics</li>
+                </ul>
+                <div class="feature-cta">
+                    <a href="interview-coach.html" class="btn">Try Interview Coach</a>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Network Optimizer</h3>
+                <p>Grow and maintain your professional network with AI-powered suggestions.</p>
+                <ul class="feature-benefits">
+                    <li>Smart connection recommendations</li>
+                    <li>Engagement optimization</li>
+                    <li>Network growth analytics</li>
+                </ul>
+                <div class="feature-cta">
+                    <a href="network-optimizer.html" class="btn">Try Network Optimizer</a>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Career Path Predictor</h3>
+                <p>Discover potential career paths and the skills needed to achieve your goals.</p>
+                <ul class="feature-benefits">
+                    <li>Personalized career path suggestions</li>
                     <li>Skill gap analysis</li>
-                    <li>Salary insights</li>
-                    <li>Company culture matching</li>
+                    <li>Salary and growth projections</li>
                 </ul>
-                <div class="ai-feature-cta">
-                    <button class="btn">Find Jobs</button>
-                </div>
-            </div>
-
-            <!-- Career Path Predictor -->
-            <div class="ai-feature-card">
-                <div class="ai-feature-icon">📈</div>
-                <h3 class="ai-feature-title">Career Path Predictor</h3>
-                <p class="ai-feature-description">Visualize your potential career paths and get personalized growth recommendations.</p>
-                <ul class="ai-feature-benefits">
-                    <li>Career trajectory analysis</li>
-                    <li>Skill development roadmap</li>
-                    <li>Industry trend insights</li>
-                    <li>Salary progression forecasts</li>
-                </ul>
-                <div class="ai-feature-cta">
-                    <button class="btn">Explore Paths</button>
-                </div>
-            </div>
-
-            <!-- Interview Coach -->
-            <div class="ai-feature-card">
-                <div class="ai-feature-icon">💬</div>
-                <h3 class="ai-feature-title">AI Interview Coach</h3>
-                <p class="ai-feature-description">Practice interviews with AI and get instant feedback on your responses.</p>
-                <ul class="ai-feature-benefits">
-                    <li>Real-time feedback</li>
-                    <li>Common question practice</li>
-                    <li>Body language analysis</li>
-                    <li>Response improvement tips</li>
-                </ul>
-                <div class="ai-feature-cta">
-                    <button class="btn">Start Practice</button>
-                </div>
-            </div>
-
-            <!-- Skill Analyzer -->
-            <div class="ai-feature-card">
-                <div class="ai-feature-icon">📊</div>
-                <h3 class="ai-feature-title">Skill Analyzer</h3>
-                <p class="ai-feature-description">Analyze your skills and get recommendations for improvement.</p>
-                <ul class="ai-feature-benefits">
-                    <li>Skill gap analysis</li>
-                    <li>Learning recommendations</li>
-                    <li>Industry benchmark comparison</li>
-                    <li>Progress tracking</li>
-                </ul>
-                <div class="ai-feature-cta">
-                    <button class="btn">Analyze Skills</button>
-                </div>
-            </div>
-
-            <!-- Network Optimizer -->
-            <div class="ai-feature-card">
-                <div class="ai-feature-icon">🤝</div>
-                <h3 class="ai-feature-title">Network Optimizer</h3>
-                <p class="ai-feature-description">Get AI-powered suggestions for building and maintaining your professional network.</p>
-                <ul class="ai-feature-benefits">
-                    <li>Connection recommendations</li>
-                    <li>Engagement suggestions</li>
-                    <li>Networking opportunities</li>
-                    <li>Relationship insights</li>
-                </ul>
-                <div class="ai-feature-cta">
-                    <button class="btn">Optimize Network</button>
+                <div class="feature-cta">
+                    <a href="career-path.html" class="btn">Try Career Path Predictor</a>
                 </div>
             </div>
         </div>
     </main>
-
-    <script src="script.js"></script>
 </body>
 </html> 

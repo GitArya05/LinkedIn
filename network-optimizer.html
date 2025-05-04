@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn - Network Optimizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .network-optimizer {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 4px solid var(--network-optimizer-accent);
+            box-shadow: var(--card-shadow);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--network-optimizer-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 0.5rem 1rem;
+            background: var(--network-optimizer-accent);
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .filter-tag.active {
+            background: var(--network-optimizer-primary);
+        }
+
+        .connection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .connection-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .connection-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .connection-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--network-optimizer-accent);
+        }
+
+        .connection-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .connection-tag {
+            padding: 0.25rem 0.5rem;
+            background: var(--network-optimizer-accent);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .connection-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .connection-actions button {
+            flex: 1;
+            background: var(--gradient-network);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .connection-actions button:hover {
+            transform: translateY(-2px);
+        }
+
+        .ai-suggestions {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--network-optimizer-primary);
+            box-shadow: var(--card-shadow);
+        }
+
+        .suggestion-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--network-optimizer-accent);
+            color: white;
+            border-radius: 4px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .connection-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .connection-info h3 {
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .connection-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .network-optimizer {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .connection-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">LinkedIn</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="ai-features.html">AI Tools</a>
+                <a href="goal-tracker.html">Goal Tracker</a>
+                <a href="interview-coach.html">Interview Coach</a>
+                <a href="network-optimizer.html">Network Optimizer</a>
+                <a href="career-path.html">Career Path</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="network-optimizer">
+        <h2>Network Optimizer</h2>
+        <p>Get AI-powered suggestions to grow and maintain your professional network.</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">250</div>
+                <div class="stat-label">Total Connections</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">85%</div>
+                <div class="stat-label">Network Strength</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">New This Month</div>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h3>Filter Connections</h3>
+            <div class="filter-tags">
+                <div class="filter-tag active" onclick="filterConnections('all')">All</div>
+                <div class="filter-tag" onclick="filterConnections('industry')">Industry</div>
+                <div class="filter-tag" onclick="filterConnections('location')">Location</div>
+                <div class="filter-tag" onclick="filterConnections('skills')">Skills</div>
+            </div>
+        </div>
+
+        <div class="connection-grid" id="connectionGrid">
+            <!-- Sample connection cards -->
+            <div class="connection-card">
+                <div class="connection-header">
+                    <div class="connection-avatar">JD</div>
+                    <div class="connection-info">
+                        <h3>John Doe</h3>
+                        <p>Senior Software Engineer at TechCorp</p>
+                    </div>
+                </div>
+                <div class="connection-tags">
+                    <span class="connection-tag">JavaScript</span>
+                    <span class="connection-tag">React</span>
+                    <span class="connection-tag">Node.js</span>
+                </div>
+                <div class="connection-actions">
+                    <button class="btn">Message</button>
+                    <button class="btn">View Profile</button>
+                </div>
+            </div>
+
+            <div class="connection-card">
+                <div class="connection-header">
+                    <div class="connection-avatar">AS</div>
+                    <div class="connection-info">
+                        <h3>Alice Smith</h3>
+                        <p>Product Manager at Innovate</p>
+                    </div>
+                </div>
+                <div class="connection-tags">
+                    <span class="connection-tag">Product Management</span>
+                    <span class="connection-tag">Agile</span>
+                    <span class="connection-tag">UX</span>
+                </div>
+                <div class="connection-actions">
+                    <button class="btn">Message</button>
+                    <button class="btn">View Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-suggestions">
+            <h3>AI Network Suggestions</h3>
+            <div class="suggestion-item">
+                <div class="suggestion-title">Connection Opportunities</div>
+                <div class="suggestion-text">
+                    Based on your profile, we recommend connecting with professionals in the AI/ML field to expand your network.
+                </div>
+            </div>
+            <div class="suggestion-item">
+                <div class="suggestion-title">Engagement Tips</div>
+                <div class="suggestion-text">
+                    Consider engaging with your network by sharing industry insights and commenting on relevant posts.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function filterConnections(filter) {
+            // Update active filter tag
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // In a real implementation, this would filter the connections
+            // For now, we'll just show a message
+            alert(`Filtering connections by ${filter}...`);
+        }
+
+        // Sample function to add a new connection
+        function addConnection(name, title, company, tags) {
+            const connectionGrid = document.getElementById('connectionGrid');
+            const connectionCard = document.createElement('div');
+            connectionCard.className = 'connection-card';
+            
+            const initials = name.split(' ').map(n => n[0]).join('');
+            
+            connectionCard.innerHTML = `
+                <div class="connection-header">
+                    <div class="connection-avatar">${initials}</div>
+                    <div class="connection-info">
+                        <h3>${name}</h3>
+                        <p>${title} at ${company}</p>
+                    </div>
+                </div>
+                <div class="connection-tags">
+                    ${tags.map(tag => `<span class="connection-tag">${tag}</span>`).join('')}
+                </div>
+                <div class="connection-actions">
+                    <button class="btn">Message</button>
+                    <button class="btn">View Profile</button>
+                </div>
+            `;
+            
+            connectionGrid.appendChild(connectionCard);
+        }
+    </script>
+</body>
+</html> 

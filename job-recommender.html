@@ -3,243 +3,383 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Job Recommender - Vibe LinkedIn</title>
+    <title>LinkedIn - Smart Job Recommender</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f3f2ef;
-        }
-
-        .header {
-            background-color: white;
-            padding: 0.5rem 1rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            color: #0a66c2;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .back-btn {
-            color: #0a66c2;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border: 1px solid #0a66c2;
-            border-radius: 4px;
-        }
-
-        .main-content {
+        .job-recommender {
             max-width: 800px;
-            margin: 5rem auto;
+            margin: 2rem auto;
             padding: 2rem;
-        }
-
-        .search-section {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-
-        h1 {
-            color: #0a66c2;
-            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
             margin-bottom: 1.5rem;
         }
 
-        label {
+        .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #666;
+            color: #333;
+            font-weight: 500;
         }
 
-        input, select {
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 0.5rem;
+            padding: 0.8rem;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 1rem;
         }
 
-        .btn {
-            background-color: #0a66c2;
-            color: white;
-            padding: 0.75rem 1.5rem;
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: #e1f3ff;
+            color: #0a66c2;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-tag button {
+            background: none;
             border: none;
-            border-radius: 4px;
+            color: #0a66c2;
             cursor: pointer;
             font-size: 1rem;
         }
 
-        .btn:hover {
-            background-color: #004182;
+        .add-skill {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .add-skill input {
+            flex: 1;
+        }
+
+        .job-results {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
         }
 
         .job-card {
-            background-color: white;
-            padding: 1.5rem;
+            background: white;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
             margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .job-title {
             color: #0a66c2;
             font-size: 1.2rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        .company {
+        .company-name {
             color: #666;
+            font-size: 1rem;
             margin-bottom: 0.5rem;
         }
 
-        .location {
+        .job-location {
             color: #666;
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
 
-        .description {
+        .job-description {
             color: #333;
-            margin-bottom: 1rem;
             line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1rem;
+            color: #666;
+            font-size: 0.9rem;
         }
 
         .match-score {
             display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background-color: #e6f2ff;
+            padding: 0.3rem 0.8rem;
+            background-color: #e1f3ff;
             color: #0a66c2;
-            border-radius: 4px;
+            border-radius: 20px;
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 1rem 0;
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
-        .loading::after {
-            content: "...";
-            animation: dots 1.5s steps(5, end) infinite;
+        .action-buttons button {
+            flex: 1;
         }
 
-        @keyframes dots {
-            0%, 20% { content: "."; }
-            40% { content: ".."; }
-            60%, 100% { content: "..."; }
+        .ai-insights {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #0a66c2;
+        }
+
+        .ai-insights h3 {
+            color: #0a66c2;
+            margin-bottom: 1rem;
+        }
+
+        .insight-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .insight-item p {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .job-recommender {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .job-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="index.html" class="logo">Vibe LinkedIn</a>
-            <a href="index.html" class="back-btn">← Back to Home</a>
+            <a href="index.html" class="logo">LinkedIn</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="ai-features.html">AI Tools</a>
+                <a href="#video">Video Resume</a>
+            </div>
         </nav>
     </header>
 
-    <main class="main-content">
-        <div class="search-section">
-            <h1>🧠 Smart Job Recommender</h1>
-            
-            <form id="jobSearchForm">
-                <div class="form-group">
-                    <label for="skills">Your Skills</label>
-                    <input type="text" id="skills" placeholder="e.g., JavaScript, Python, Project Management" required>
-                </div>
+    <main class="job-recommender">
+        <h2>Smart Job Recommender</h2>
+        <p>Tell us about your skills and preferences, and we'll find the perfect jobs for you.</p>
 
-                <div class="form-group">
-                    <label for="experience">Years of Experience</label>
-                    <select id="experience" required>
-                        <option value="">Select experience level</option>
-                        <option value="entry">Entry Level (0-2 years)</option>
-                        <option value="mid">Mid Level (3-5 years)</option>
-                        <option value="senior">Senior Level (5+ years)</option>
-                    </select>
-                </div>
+        <form id="jobForm">
+            <div class="form-group">
+                <label for="currentRole">Current/Desired Role</label>
+                <input type="text" id="currentRole" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="location">Preferred Location</label>
-                    <input type="text" id="location" placeholder="e.g., Remote, New York, San Francisco">
-                </div>
+            <div class="form-group">
+                <label for="experienceLevel">Years of Experience</label>
+                <select id="experienceLevel" required>
+                    <option value="">Select experience level</option>
+                    <option value="entry">Entry Level (0-2 years)</option>
+                    <option value="mid">Mid Level (3-5 years)</option>
+                    <option value="senior">Senior Level (6-10 years)</option>
+                    <option value="expert">Expert Level (10+ years)</option>
+                </select>
+            </div>
 
-                <button type="submit" class="btn">Find Matching Jobs</button>
-            </form>
+            <div class="form-group">
+                <label for="location">Preferred Location</label>
+                <input type="text" id="location" placeholder="e.g., New York, Remote, etc.">
+            </div>
+
+            <div class="form-group">
+                <label>Skills</label>
+                <div class="skill-tags" id="skillTags"></div>
+                <div class="add-skill">
+                    <input type="text" id="newSkill" placeholder="Add a skill">
+                    <button type="button" class="btn" onclick="addSkill()">Add</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="industry">Industry Preference</label>
+                <select id="industry" required>
+                    <option value="">Select industry</option>
+                    <option value="tech">Technology</option>
+                    <option value="finance">Finance</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="education">Education</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="salaryRange">Expected Salary Range</label>
+                <select id="salaryRange" required>
+                    <option value="">Select salary range</option>
+                    <option value="0-50k">$0 - $50,000</option>
+                    <option value="50k-100k">$50,000 - $100,000</option>
+                    <option value="100k-150k">$100,000 - $150,000</option>
+                    <option value="150k+">$150,000+</option>
+                </select>
+            </div>
+
+            <div class="action-buttons">
+                <button type="submit" class="btn">Find Jobs</button>
+                <button type="button" class="btn" onclick="clearForm()">Clear Form</button>
+            </div>
+        </form>
+
+        <div class="ai-insights" id="aiInsights" style="display: none;">
+            <h3>AI Career Insights</h3>
+            <div class="insight-item">
+                <p>Based on your profile, we recommend focusing on these growing skills:</p>
+                <p>Cloud Computing, Machine Learning, Data Analysis</p>
+            </div>
+            <div class="insight-item">
+                <p>Career Path Suggestion:</p>
+                <p>Consider transitioning to a Senior Developer role with a focus on AI/ML technologies</p>
+            </div>
         </div>
 
-        <div class="loading" id="loading">Finding matching jobs for you</div>
-
-        <div id="jobResults" style="display: none;">
-            <div class="job-card">
-                <h2 class="job-title">Senior Software Engineer</h2>
-                <div class="company">TechCorp Inc.</div>
-                <div class="location">Remote</div>
-                <div class="match-score">95% Match</div>
-                <p class="description">Looking for an experienced software engineer with strong JavaScript and Python skills. Must have experience with cloud technologies and team leadership.</p>
-            </div>
-
-            <div class="job-card">
-                <h2 class="job-title">Full Stack Developer</h2>
-                <div class="company">Innovate Solutions</div>
-                <div class="location">San Francisco, CA</div>
-                <div class="match-score">88% Match</div>
-                <p class="description">Join our team to build cutting-edge web applications. Experience with React, Node.js, and database design required.</p>
-            </div>
-
-            <div class="job-card">
-                <h2 class="job-title">Project Manager</h2>
-                <div class="company">Global Tech</div>
-                <div class="location">New York, NY</div>
-                <div class="match-score">82% Match</div>
-                <p class="description">Lead software development projects and coordinate with cross-functional teams. Strong communication and organizational skills required.</p>
-            </div>
+        <div class="job-results" id="jobResults">
+            <!-- Job recommendations will appear here -->
         </div>
     </main>
 
     <script>
-        document.getElementById('jobSearchForm').addEventListener('submit', function(e) {
+        const skillTags = document.getElementById('skillTags');
+        const newSkill = document.getElementById('newSkill');
+        const jobForm = document.getElementById('jobForm');
+        const jobResults = document.getElementById('jobResults');
+        const aiInsights = document.getElementById('aiInsights');
+
+        function addSkill() {
+            const skill = newSkill.value.trim();
+            if (skill) {
+                const tag = document.createElement('div');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `
+                    ${skill}
+                    <button type="button" onclick="this.parentElement.remove()">×</button>
+                `;
+                skillTags.appendChild(tag);
+                newSkill.value = '';
+            }
+        }
+
+        function clearForm() {
+            jobForm.reset();
+            skillTags.innerHTML = '';
+            jobResults.innerHTML = '';
+            aiInsights.style.display = 'none';
+        }
+
+        jobForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Show loading state
-            document.getElementById('loading').style.display = 'block';
-            
-            // Simulate AI processing
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('jobResults').style.display = 'block';
-                
-                // In a real implementation, this would call an AI API
-                // and generate actual job recommendations based on the input
-            }, 2000);
+            // Get form data
+            const formData = {
+                currentRole: document.getElementById('currentRole').value,
+                experienceLevel: document.getElementById('experienceLevel').value,
+                location: document.getElementById('location').value,
+                skills: Array.from(skillTags.children).map(tag => tag.textContent.trim().replace('×', '')),
+                industry: document.getElementById('industry').value,
+                salaryRange: document.getElementById('salaryRange').value
+            };
+
+            // Show AI insights
+            aiInsights.style.display = 'block';
+
+            // Generate job recommendations
+            generateJobRecommendations(formData);
         });
+
+        function generateJobRecommendations(data) {
+            // Sample job data - in a real implementation, this would come from an API
+            const sampleJobs = [
+                {
+                    title: "Senior Software Engineer",
+                    company: "TechCorp Inc.",
+                    location: "San Francisco, CA",
+                    description: "We're looking for a Senior Software Engineer to join our team. You'll be working on cutting-edge technologies and leading a team of developers.",
+                    matchScore: 95,
+                    salary: "$120,000 - $150,000",
+                    type: "Full-time"
+                },
+                {
+                    title: "Full Stack Developer",
+                    company: "Innovate Solutions",
+                    location: "Remote",
+                    description: "Join our remote team as a Full Stack Developer. Work on exciting projects and help shape the future of our platform.",
+                    matchScore: 88,
+                    salary: "$100,000 - $130,000",
+                    type: "Full-time"
+                },
+                {
+                    title: "Frontend Developer",
+                    company: "Digital Creations",
+                    location: "New York, NY",
+                    description: "Looking for a Frontend Developer with strong React skills to help build our next-generation web applications.",
+                    matchScore: 82,
+                    salary: "$90,000 - $120,000",
+                    type: "Full-time"
+                }
+            ];
+
+            // Clear previous results
+            jobResults.innerHTML = '';
+
+            // Add each job to the results
+            sampleJobs.forEach(job => {
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.innerHTML = `
+                    <div class="job-title">${job.title}</div>
+                    <div class="company-name">${job.company}</div>
+                    <div class="job-location">${job.location}</div>
+                    <div class="job-description">${job.description}</div>
+                    <div class="job-meta">
+                        <span>${job.salary}</span>
+                        <span>${job.type}</span>
+                        <span class="match-score">${job.matchScore}% Match</span>
+                    </div>
+                `;
+                jobResults.appendChild(jobCard);
+            });
+        }
     </script>
 </body>
 </html> 

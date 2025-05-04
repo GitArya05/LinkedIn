@@ -1,3 +1,46 @@
+:root {
+    /* Base Colors */
+    --primary-color: #0a66c2;
+    --secondary-color: #004182;
+    --accent-color: #70b5f9;
+    --background-color: #f3f2ef;
+    --text-color: #333;
+    --light-text: #666;
+    --border-color: #ddd;
+    --success-color: #057642;
+    --warning-color: #e7a33e;
+    --error-color: #d11124;
+
+    /* Feature-specific Colors */
+    --goal-tracker-primary: #2e7d32;
+    --goal-tracker-secondary: #1b5e20;
+    --goal-tracker-accent: #81c784;
+
+    --interview-coach-primary: #c62828;
+    --interview-coach-secondary: #8e0000;
+    --interview-coach-accent: #ef5350;
+
+    --network-optimizer-primary: #1565c0;
+    --network-optimizer-secondary: #0d47a1;
+    --network-optimizer-accent: #64b5f6;
+
+    --career-path-primary: #6a1b9a;
+    --career-path-secondary: #4a148c;
+    --career-path-accent: #ab47bc;
+
+    /* Card Colors */
+    --card-bg: white;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --card-hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+    /* Gradient Colors */
+    --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    --gradient-goal: linear-gradient(135deg, var(--goal-tracker-primary), var(--goal-tracker-secondary));
+    --gradient-interview: linear-gradient(135deg, var(--interview-coach-primary), var(--interview-coach-secondary));
+    --gradient-network: linear-gradient(135deg, var(--network-optimizer-primary), var(--network-optimizer-secondary));
+    --gradient-career: linear-gradient(135deg, var(--career-path-primary), var(--career-path-secondary));
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,14 +49,16 @@
 }
 
 body {
-    background-color: #f3f2ef;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
 /* Header Styles */
 .header {
-    background-color: white;
+    background: white;
     padding: 0.5rem 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
     top: 0;
@@ -29,10 +74,11 @@ body {
 }
 
 .logo {
-    color: #0a66c2;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
-    text-decoration: none;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .nav-links {
@@ -41,13 +87,27 @@ body {
 }
 
 .nav-links a {
-    color: #666;
+    color: var(--text-color);
     text-decoration: none;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
 }
 
-.nav-links a:hover {
-    color: #0a66c2;
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
 }
 
 /* Main Content */
@@ -84,14 +144,14 @@ body {
 }
 
 .hero h1 {
-    color: #0a66c2;
+    color: var(--primary-color);
     margin-bottom: 0.8rem;
     font-size: 2.2rem;
     font-weight: 600;
 }
 
 .hero p {
-    color: #666;
+    color: var(--text-color);
     line-height: 1.5;
     margin-bottom: 1.2rem;
     font-size: 1.1rem;
@@ -122,12 +182,12 @@ body {
 .profile-name {
     font-size: 1.4rem;
     font-weight: 600;
-    color: #000;
+    color: var(--text-color);
     margin-bottom: 0.3rem;
 }
 
 .profile-title {
-    color: #666;
+    color: var(--text-color);
     margin-bottom: 0.5rem;
     font-size: 1rem;
 }
@@ -149,13 +209,13 @@ body {
 .stat-number {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #0a66c2;
+    color: var(--primary-color);
     margin-bottom: 0.25rem;
 }
 
 .stat-label {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-color);
 }
 
 .profile-badges {
@@ -167,7 +227,7 @@ body {
 
 .badge {
     background-color: #e1f3ff;
-    color: #0a66c2;
+    color: var(--primary-color);
     padding: 0.4rem 0.8rem;
     border-radius: 20px;
     font-size: 0.9rem;
@@ -177,7 +237,7 @@ body {
 }
 
 .connect-btn {
-    background-color: #0a66c2;
+    background-color: var(--primary-color);
     color: white;
     padding: 0.6rem 1.5rem;
     border-radius: 25px;
@@ -191,7 +251,7 @@ body {
 }
 
 .connect-btn:hover {
-    background-color: #004182;
+    background-color: var(--secondary-color);
 }
 
 /* Feature Cards */
@@ -218,7 +278,7 @@ body {
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, #0a66c2, #057642);
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -228,17 +288,17 @@ body {
 }
 
 .feature-card h3 {
-    color: #0a66c2;
+    color: var(--primary-color);
     margin-bottom: 0.5rem;
 }
 
 .feature-card p {
-    color: #666;
+    color: var(--text-color);
     margin-bottom: 1rem;
 }
 
 .btn {
-    background-color: #0a66c2;
+    background-color: var(--primary-color);
     color: white;
     padding: 0.5rem 1rem;
     border: none;
@@ -249,7 +309,7 @@ body {
 }
 
 .btn:hover {
-    background-color: #004182;
+    background-color: var(--secondary-color);
 }
 
 /* AI Chat Demo */
@@ -277,7 +337,7 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #0a66c2;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     cursor: pointer;
@@ -294,7 +354,7 @@ body {
 
 .mini-badge {
     background-color: #e1f3ff;
-    color: #0a66c2;
+    color: var(--primary-color);
     padding: 0.25rem 0.5rem;
     border-radius: 12px;
     font-size: 0.8rem;
@@ -303,12 +363,12 @@ body {
 .connection-preview {
     margin: 1rem 0;
     padding: 0.5rem;
-    background-color: #f3f2ef;
+    background-color: var(--background-color);
     border-radius: 4px;
 }
 
 .connection-stat {
-    color: #057642;
+    color: var(--success-color);
     font-size: 0.9rem;
     font-weight: 500;
 }
@@ -325,7 +385,7 @@ body {
 }
 
 .trend-stat {
-    color: #057642;
+    color: var(--success-color);
     font-size: 0.9rem;
     font-weight: 500;
 }
@@ -582,4 +642,145 @@ html, body {
     h1, h2, h3 {
         line-height: 1.2;
     }
+}
+
+/* Enhanced Card Styles */
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+/* Feature-specific Button Styles */
+.btn-goal {
+    background: var(--gradient-goal);
+    color: white;
+}
+
+.btn-interview {
+    background: var(--gradient-interview);
+    color: white;
+}
+
+.btn-network {
+    background: var(--gradient-network);
+    color: white;
+}
+
+.btn-career {
+    background: var(--gradient-career);
+    color: white;
+}
+
+/* Feature-specific Card Styles */
+.card-goal {
+    border-top: 4px solid var(--goal-tracker-primary);
+}
+
+.card-interview {
+    border-top: 4px solid var(--interview-coach-primary);
+}
+
+.card-network {
+    border-top: 4px solid var(--network-optimizer-primary);
+}
+
+.card-career {
+    border-top: 4px solid var(--career-path-primary);
+}
+
+/* Enhanced Progress Bars */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-goal {
+    background: var(--gradient-goal);
+}
+
+.progress-interview {
+    background: var(--gradient-interview);
+}
+
+.progress-network {
+    background: var(--gradient-network);
+}
+
+.progress-career {
+    background: var(--gradient-career);
+}
+
+/* Enhanced Tag Styles */
+.tag-goal {
+    background: var(--goal-tracker-accent);
+    color: white;
+}
+
+.tag-interview {
+    background: var(--interview-coach-accent);
+    color: white;
+}
+
+.tag-network {
+    background: var(--network-optimizer-accent);
+    color: white;
+}
+
+.tag-career {
+    background: var(--career-path-accent);
+    color: white;
+}
+
+/* Enhanced Form Styles */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+}
+
+/* Enhanced Navigation */
+.nav-links a {
+    position: relative;
+    padding: 0.5rem 1rem;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Enhanced Header */
+.header {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 } 

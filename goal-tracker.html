@@ -3,283 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career Goal Tracker - Vibe LinkedIn</title>
+    <title>LinkedIn - Goal Tracker</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f3f2ef;
-        }
-
-        .header {
-            background-color: white;
-            padding: 0.5rem 1rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            color: #0a66c2;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .back-btn {
-            color: #0a66c2;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border: 1px solid #0a66c2;
-            border-radius: 4px;
-        }
-
-        .main-content {
+        .goal-tracker {
             max-width: 800px;
-            margin: 5rem auto;
+            margin: 2rem auto;
             padding: 2rem;
-        }
-
-        .goal-section {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-
-        h1 {
-            color: #0a66c2;
-            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
         }
 
         .form-group {
             margin-bottom: 1.5rem;
         }
 
-        label {
+        .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #666;
+            color: #333;
+            font-weight: 500;
         }
 
-        input, textarea, select {
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 0.5rem;
+            padding: 0.8rem;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 1rem;
         }
 
-        textarea {
+        .form-group textarea {
             min-height: 100px;
             resize: vertical;
         }
 
-        .btn {
-            background-color: #0a66c2;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
+        .goal-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .btn:hover {
-            background-color: #004182;
-        }
-
-        .goal-card {
-            background-color: white;
+        .category-card {
+            background: white;
             padding: 1.5rem;
             border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--goal-tracker-accent);
+            box-shadow: var(--card-shadow);
         }
 
-        .goal-title {
-            color: #0a66c2;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
         }
 
-        .goal-description {
-            color: #666;
+        .category-card.selected {
+            background: var(--goal-tracker-accent);
+            color: white;
+        }
+
+        .goal-list {
+            margin-top: 2rem;
+        }
+
+        .goal-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
             margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .goal-item.completed {
+            background: var(--goal-tracker-accent);
+            color: white;
+            border-color: var(--goal-tracker-primary);
+        }
+
+        .goal-progress {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
         }
 
         .progress-bar {
-            height: 8px;
-            background-color: #e6f2ff;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
-
-        .progress {
             height: 100%;
-            background-color: #0a66c2;
-            border-radius: 4px;
+            background: var(--gradient-goal);
             width: 0%;
             transition: width 0.3s ease;
         }
 
-        .milestones {
-            margin-top: 1rem;
-        }
-
-        .milestone {
+        .action-buttons {
             display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
-        .milestone input[type="checkbox"] {
-            margin-right: 0.5rem;
+        .action-buttons button {
+            background: var(--gradient-goal);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
 
-        .milestone.completed {
-            color: #666;
-            text-decoration: line-through;
+        .action-buttons button:hover {
+            transform: translateY(-2px);
         }
 
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 1rem 0;
+        .ai-suggestions {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--goal-tracker-primary);
+            box-shadow: var(--card-shadow);
         }
 
-        .loading::after {
-            content: "...";
-            animation: dots 1.5s steps(5, end) infinite;
+        .ai-suggestions h3 {
+            color: #0a66c2;
+            margin-bottom: 1rem;
         }
 
-        @keyframes dots {
-            0%, 20% { content: "."; }
-            40% { content: ".."; }
-            60%, 100% { content: "..."; }
+        .suggestion-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--goal-tracker-accent);
+            color: white;
+            border-radius: 4px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--goal-tracker-primary);
+            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .goal-tracker {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="index.html" class="logo">Vibe LinkedIn</a>
-            <a href="index.html" class="back-btn">← Back to Home</a>
+            <a href="index.html" class="logo">LinkedIn</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="ai-features.html">AI Tools</a>
+                <a href="goal-tracker.html">Goal Tracker</a>
+                <a href="interview-coach.html">Interview Coach</a>
+                <a href="network-optimizer.html">Network Optimizer</a>
+                <a href="career-path.html">Career Path</a>
+            </div>
         </nav>
     </header>
 
-    <main class="main-content">
-        <div class="goal-section">
-            <h1>🎯 Career Goal Tracker</h1>
-            
-            <form id="goalForm">
-                <div class="form-group">
-                    <label for="goal">Your Career Goal</label>
-                    <input type="text" id="goal" placeholder="e.g., Become a Senior Software Engineer" required>
-                </div>
+    <main class="goal-tracker">
+        <h2>Career Goal Tracker</h2>
+        <p>Set and track your career goals with AI-powered insights and recommendations.</p>
 
-                <div class="form-group">
-                    <label for="timeline">Target Timeline</label>
-                    <select id="timeline" required>
-                        <option value="">Select timeline</option>
-                        <option value="3">3 months</option>
-                        <option value="6">6 months</option>
-                        <option value="12">1 year</option>
-                        <option value="24">2 years</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="milestones">Key Milestones (one per line)</label>
-                    <textarea id="milestones" placeholder="Enter your milestones, one per line" required></textarea>
-                </div>
-
-                <button type="submit" class="btn">Create Goal Plan</button>
-            </form>
+        <div class="goal-categories">
+            <div class="category-card" onclick="selectCategory(this, 'skills')">
+                <h3>Skills Development</h3>
+                <p>Track your learning progress</p>
+            </div>
+            <div class="category-card" onclick="selectCategory(this, 'career')">
+                <h3>Career Growth</h3>
+                <p>Set career advancement goals</p>
+            </div>
+            <div class="category-card" onclick="selectCategory(this, 'network')">
+                <h3>Networking</h3>
+                <p>Build professional connections</p>
+            </div>
         </div>
 
-        <div class="loading" id="loading">Creating your personalized goal plan</div>
+        <form id="goalForm">
+            <div class="form-group">
+                <label for="goalTitle">Goal Title</label>
+                <input type="text" id="goalTitle" required>
+            </div>
 
-        <div id="goalPlan" style="display: none;">
-            <div class="goal-card">
-                <h2 class="goal-title">Become a Senior Software Engineer</h2>
-                <p class="goal-description">Target completion: 1 year from now</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 25%"></div>
-                </div>
-                <div class="milestones">
-                    <div class="milestone">
-                        <input type="checkbox" checked>
-                        <span class="completed">Complete advanced JavaScript course</span>
-                    </div>
-                    <div class="milestone">
-                        <input type="checkbox" checked>
-                        <span class="completed">Learn React and Redux</span>
-                    </div>
-                    <div class="milestone">
-                        <input type="checkbox">
-                        <span>Master system design principles</span>
-                    </div>
-                    <div class="milestone">
-                        <input type="checkbox">
-                        <span>Lead a team project</span>
-                    </div>
-                    <div class="milestone">
-                        <input type="checkbox">
-                        <span>Get AWS certification</span>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="goalDescription">Description</label>
+                <textarea id="goalDescription" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="timeline">Timeline</label>
+                <select id="timeline" required>
+                    <option value="">Select timeline</option>
+                    <option value="1month">1 Month</option>
+                    <option value="3months">3 Months</option>
+                    <option value="6months">6 Months</option>
+                    <option value="1year">1 Year</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="priority">Priority</label>
+                <select id="priority" required>
+                    <option value="">Select priority</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+
+            <div class="action-buttons">
+                <button type="submit" class="btn">Add Goal</button>
+                <button type="button" class="btn" onclick="clearForm()">Clear Form</button>
+            </div>
+        </form>
+
+        <div class="goal-list" id="goalList">
+            <!-- Goals will be added here -->
+        </div>
+
+        <div class="ai-suggestions" id="aiSuggestions" style="display: none;">
+            <h3>AI Suggestions</h3>
+            <div class="suggestion-item">
+                <p>Based on your goals, we recommend:</p>
+                <p>Consider breaking down your large goals into smaller, manageable milestones</p>
+            </div>
+            <div class="suggestion-item">
+                <p>Skill Development Tip:</p>
+                <p>Focus on learning one skill at a time to maintain consistent progress</p>
             </div>
         </div>
     </main>
 
     <script>
-        document.getElementById('goalForm').addEventListener('submit', function(e) {
+        const goalForm = document.getElementById('goalForm');
+        const goalList = document.getElementById('goalList');
+        const aiSuggestions = document.getElementById('aiSuggestions');
+        let selectedCategory = '';
+
+        function selectCategory(element, category) {
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedCategory = category;
+        }
+
+        function clearForm() {
+            goalForm.reset();
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            selectedCategory = '';
+        }
+
+        function createGoalElement(goal) {
+            const goalElement = document.createElement('div');
+            goalElement.className = 'goal-item';
+            goalElement.innerHTML = `
+                <div>
+                    <h3>${goal.title}</h3>
+                    <p>${goal.description}</p>
+                    <div class="goal-progress">
+                        <div class="progress-bar" style="width: ${goal.progress}%"></div>
+                    </div>
+                    <p>Timeline: ${goal.timeline} | Priority: ${goal.priority}</p>
+                </div>
+                <div>
+                    <button class="btn" onclick="updateProgress(this, 25)">+25%</button>
+                    <button class="btn" onclick="updateProgress(this, 50)">+50%</button>
+                    <button class="btn" onclick="completeGoal(this)">Complete</button>
+                </div>
+            `;
+            return goalElement;
+        }
+
+        function updateProgress(button, amount) {
+            const goalItem = button.closest('.goal-item');
+            const progressBar = goalItem.querySelector('.progress-bar');
+            const currentWidth = parseInt(progressBar.style.width) || 0;
+            const newWidth = Math.min(currentWidth + amount, 100);
+            progressBar.style.width = `${newWidth}%`;
+            
+            if (newWidth === 100) {
+                goalItem.classList.add('completed');
+            }
+        }
+
+        function completeGoal(button) {
+            const goalItem = button.closest('.goal-item');
+            goalItem.classList.add('completed');
+            const progressBar = goalItem.querySelector('.progress-bar');
+            progressBar.style.width = '100%';
+        }
+
+        goalForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Show loading state
-            document.getElementById('loading').style.display = 'block';
-            
-            // Simulate AI processing
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('goalPlan').style.display = 'block';
-                
-                // In a real implementation, this would call an AI API
-                // and generate a personalized goal plan based on the input
-            }, 2000);
-        });
+            if (!selectedCategory) {
+                alert('Please select a goal category');
+                return;
+            }
 
-        // Update progress bar based on completed milestones
-        document.querySelectorAll('.milestone input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const totalMilestones = document.querySelectorAll('.milestone').length;
-                const completedMilestones = document.querySelectorAll('.milestone input[type="checkbox"]:checked').length;
-                const progress = (completedMilestones / totalMilestones) * 100;
-                document.querySelector('.progress').style.width = `${progress}%`;
-                
-                if (this.checked) {
-                    this.nextElementSibling.classList.add('completed');
-                } else {
-                    this.nextElementSibling.classList.remove('completed');
-                }
-            });
+            const goal = {
+                title: document.getElementById('goalTitle').value,
+                description: document.getElementById('goalDescription').value,
+                timeline: document.getElementById('timeline').value,
+                priority: document.getElementById('priority').value,
+                category: selectedCategory,
+                progress: 0
+            };
+
+            const goalElement = createGoalElement(goal);
+            goalList.appendChild(goalElement);
+
+            // Show AI suggestions
+            aiSuggestions.style.display = 'block';
+
+            // Clear form
+            clearForm();
         });
     </script>
 </body>

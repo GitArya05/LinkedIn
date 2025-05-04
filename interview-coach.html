@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn - AI Interview Coach</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .interview-coach {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .interview-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .type-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--interview-coach-accent);
+            box-shadow: var(--card-shadow);
+        }
+
+        .type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .type-card.selected {
+            background: var(--interview-coach-accent);
+            color: white;
+        }
+
+        .type-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .interview-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .question-text {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .response-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin: 1rem 0;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .response-input:focus {
+            border-color: var(--interview-coach-primary);
+            box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .action-buttons button {
+            background: var(--gradient-interview);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .action-buttons button:hover {
+            transform: translateY(-2px);
+        }
+
+        .feedback-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--interview-coach-primary);
+            box-shadow: var(--card-shadow);
+        }
+
+        .feedback-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--interview-coach-accent);
+            color: white;
+            border-radius: 4px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .feedback-title {
+            color: #0a66c2;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-text {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-interview);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .interview-coach {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .interview-types {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">LinkedIn</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="ai-features.html">AI Tools</a>
+                <a href="goal-tracker.html">Goal Tracker</a>
+                <a href="interview-coach.html">Interview Coach</a>
+                <a href="network-optimizer.html">Network Optimizer</a>
+                <a href="career-path.html">Career Path</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="interview-coach">
+        <h2>AI Interview Coach</h2>
+        <p>Practice your interview skills with our AI coach and get instant feedback.</p>
+
+        <div class="interview-types">
+            <div class="type-card" onclick="selectType(this, 'technical')">
+                <div class="type-icon">💻</div>
+                <h3>Technical</h3>
+                <p>Coding & Technical Questions</p>
+            </div>
+            <div class="type-card" onclick="selectType(this, 'behavioral')">
+                <div class="type-icon">🤝</div>
+                <h3>Behavioral</h3>
+                <p>Soft Skills & Experience</p>
+            </div>
+            <div class="type-card" onclick="selectType(this, 'case')">
+                <div class="type-icon">📊</div>
+                <h3>Case Study</h3>
+                <p>Problem Solving</p>
+            </div>
+        </div>
+
+        <div class="interview-container" id="interviewContainer" style="display: none;">
+            <div class="progress-container">
+                <div class="progress-bar" id="interviewProgress"></div>
+            </div>
+
+            <div class="question-card">
+                <p class="question-text" id="currentQuestion"></p>
+                <textarea class="response-input" id="responseInput" placeholder="Type your response here..."></textarea>
+                <div class="action-buttons">
+                    <button class="btn" onclick="submitResponse()">Submit Response</button>
+                    <button class="btn" onclick="skipQuestion()">Skip Question</button>
+                </div>
+            </div>
+
+            <div class="feedback-section" id="feedbackSection" style="display: none;">
+                <h3>AI Feedback</h3>
+                <div class="feedback-item">
+                    <div class="feedback-title">Strengths</div>
+                    <div class="feedback-text" id="strengthsFeedback"></div>
+                </div>
+                <div class="feedback-item">
+                    <div class="feedback-title">Areas for Improvement</div>
+                    <div class="feedback-text" id="improvementsFeedback"></div>
+                </div>
+                <div class="feedback-item">
+                    <div class="feedback-title">Suggested Answer</div>
+                    <div class="feedback-text" id="suggestedAnswer"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const interviewTypes = {
+            technical: [
+                "Explain the difference between synchronous and asynchronous programming.",
+                "How would you optimize a slow database query?",
+                "Describe your approach to debugging a complex issue."
+            ],
+            behavioral: [
+                "Tell me about a time you faced a difficult challenge at work.",
+                "How do you handle conflicts within your team?",
+                "Describe a situation where you had to learn something new quickly."
+            ],
+            case: [
+                "How would you design a scalable social media platform?",
+                "Estimate the market size for electric vehicles in your country.",
+                "How would you improve user engagement on our platform?"
+            ]
+        };
+
+        let currentType = '';
+        let currentQuestionIndex = 0;
+        let totalQuestions = 0;
+
+        function selectType(element, type) {
+            document.querySelectorAll('.type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            currentType = type;
+            startInterview();
+        }
+
+        function startInterview() {
+            const container = document.getElementById('interviewContainer');
+            container.style.display = 'block';
+            currentQuestionIndex = 0;
+            totalQuestions = interviewTypes[currentType].length;
+            updateProgress();
+            showNextQuestion();
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestionIndex / totalQuestions) * 100;
+            document.getElementById('interviewProgress').style.width = `${progress}%`;
+        }
+
+        function showNextQuestion() {
+            if (currentQuestionIndex < totalQuestions) {
+                document.getElementById('currentQuestion').textContent = interviewTypes[currentType][currentQuestionIndex];
+                document.getElementById('responseInput').value = '';
+                document.getElementById('feedbackSection').style.display = 'none';
+            } else {
+                document.getElementById('interviewContainer').innerHTML = `
+                    <div class="question-card">
+                        <h3>Interview Complete!</h3>
+                        <p>You've completed all the questions. Would you like to try another interview type?</p>
+                        <button class="btn" onclick="resetInterview()">Start New Interview</button>
+                    </div>
+                `;
+            }
+        }
+
+        function submitResponse() {
+            const response = document.getElementById('responseInput').value.trim();
+            if (!response) {
+                alert('Please enter your response before submitting.');
+                return;
+            }
+
+            // Show feedback
+            const feedbackSection = document.getElementById('feedbackSection');
+            feedbackSection.style.display = 'block';
+
+            // Generate sample feedback (in a real implementation, this would come from an AI API)
+            document.getElementById('strengthsFeedback').textContent = 
+                "Your response shows good technical understanding and clear communication.";
+            document.getElementById('improvementsFeedback').textContent = 
+                "Consider providing more specific examples and quantifying your achievements.";
+            document.getElementById('suggestedAnswer').textContent = 
+                "A more comprehensive answer would include specific examples, metrics, and a clear structure.";
+
+            // Move to next question after a delay
+            setTimeout(() => {
+                currentQuestionIndex++;
+                updateProgress();
+                showNextQuestion();
+            }, 3000);
+        }
+
+        function skipQuestion() {
+            currentQuestionIndex++;
+            updateProgress();
+            showNextQuestion();
+        }
+
+        function resetInterview() {
+            document.getElementById('interviewContainer').style.display = 'none';
+            document.querySelectorAll('.type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            currentType = '';
+        }
+    </script>
+</body>
+</html> 

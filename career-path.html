@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn - Career Path Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .career-path {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .path-form {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--career-path-primary);
+            box-shadow: 0 0 0 2px rgba(106, 27, 154, 0.2);
+        }
+
+        .path-visualization {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .path-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .path-timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-career);
+            z-index: 1;
+        }
+
+        .path-node {
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--career-path-primary);
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .path-node:hover {
+            transform: scale(1.1);
+            background: var(--career-path-accent);
+            color: white;
+        }
+
+        .path-node.active {
+            background: var(--career-path-primary);
+            color: white;
+        }
+
+        .path-details {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .salary-progress {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .salary-bar {
+            height: 100%;
+            background: var(--gradient-career);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .ai-insights {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--career-path-primary);
+            box-shadow: var(--card-shadow);
+        }
+
+        .insight-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--career-path-accent);
+            color: white;
+            border-radius: 4px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .btn-submit {
+            background: var(--gradient-career);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        .path-node::after {
+            content: attr(data-title);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .career-path {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .path-nodes {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .path-line {
+                display: none;
+            }
+
+            .path-node::after {
+                bottom: auto;
+                left: 100%;
+                top: 50%;
+                transform: translateY(-50%);
+                margin-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">LinkedIn</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="ai-features.html">AI Tools</a>
+                <a href="goal-tracker.html">Goal Tracker</a>
+                <a href="interview-coach.html">Interview Coach</a>
+                <a href="network-optimizer.html">Network Optimizer</a>
+                <a href="career-path.html">Career Path</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="career-path">
+        <h2>Career Path Predictor</h2>
+        <p>Discover potential career paths and the skills needed to achieve your goals.</p>
+
+        <form id="careerForm">
+            <div class="form-group">
+                <label for="currentRole">Current Role</label>
+                <input type="text" id="currentRole" required>
+            </div>
+
+            <div class="form-group">
+                <label for="experience">Years of Experience</label>
+                <select id="experience" required>
+                    <option value="">Select experience</option>
+                    <option value="0-2">0-2 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="6-10">6-10 years</option>
+                    <option value="10+">10+ years</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="industry">Industry</label>
+                <select id="industry" required>
+                    <option value="">Select industry</option>
+                    <option value="tech">Technology</option>
+                    <option value="finance">Finance</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="education">Education</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">Generate Career Path</button>
+        </form>
+
+        <div class="path-visualization" id="pathVisualization" style="display: none;">
+            <div class="path-line"></div>
+            <div class="path-nodes">
+                <div class="path-node active" data-title="Current Role" onclick="showPathDetails('current')">1</div>
+                <div class="path-node" data-title="Next Step" onclick="showPathDetails('next')">2</div>
+                <div class="path-node" data-title="Mid Career" onclick="showPathDetails('mid')">3</div>
+                <div class="path-node" data-title="Senior Level" onclick="showPathDetails('senior')">4</div>
+                <div class="path-node" data-title="Leadership" onclick="showPathDetails('leadership')">5</div>
+            </div>
+        </div>
+
+        <div class="path-details" id="pathDetails" style="display: none;">
+            <div class="detail-section">
+                <h3>Role Overview</h3>
+                <p id="roleDescription"></p>
+            </div>
+
+            <div class="detail-section">
+                <h3>Required Skills</h3>
+                <div class="skill-list" id="requiredSkills"></div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Salary Range</h3>
+                <div class="salary-range">
+                    <span id="minSalary"></span>
+                    <div class="salary-bar">
+                        <div class="salary-progress" id="salaryProgress"></div>
+                    </div>
+                    <span id="maxSalary"></span>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Growth Opportunities</h3>
+                <p id="growthOpportunities"></p>
+            </div>
+        </div>
+
+        <div class="ai-insights" id="aiInsights" style="display: none;">
+            <h3>AI Career Insights</h3>
+            <div class="insight-item">
+                <div class="insight-title">Skill Development</div>
+                <div class="insight-text">
+                    Based on your current skills and experience, we recommend focusing on these areas for career advancement.
+                </div>
+            </div>
+            <div class="insight-item">
+                <div class="insight-title">Industry Trends</div>
+                <div class="insight-text">
+                    The demand for professionals with your skill set is expected to grow by 15% in the next 5 years.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const careerForm = document.getElementById('careerForm');
+        const pathVisualization = document.getElementById('pathVisualization');
+        const pathDetails = document.getElementById('pathDetails');
+        const aiInsights = document.getElementById('aiInsights');
+
+        // Sample career path data
+        const careerPaths = {
+            tech: {
+                current: {
+                    title: "Software Engineer",
+                    description: "Entry-level position focusing on coding and development tasks.",
+                    skills: ["JavaScript", "HTML", "CSS", "Git"],
+                    salary: { min: 60000, max: 90000 }
+                },
+                next: {
+                    title: "Senior Software Engineer",
+                    description: "Mid-level position with more responsibility and technical leadership.",
+                    skills: ["React", "Node.js", "AWS", "System Design"],
+                    salary: { min: 90000, max: 130000 }
+                },
+                mid: {
+                    title: "Tech Lead",
+                    description: "Leading technical projects and mentoring junior developers.",
+                    skills: ["Architecture", "Team Leadership", "Project Management"],
+                    salary: { min: 130000, max: 160000 }
+                },
+                senior: {
+                    title: "Engineering Manager",
+                    description: "Managing engineering teams and technical strategy.",
+                    skills: ["People Management", "Strategic Planning", "Budgeting"],
+                    salary: { min: 160000, max: 200000 }
+                },
+                leadership: {
+                    title: "CTO",
+                    description: "Leading the entire technical organization and strategy.",
+                    skills: ["Executive Leadership", "Business Strategy", "Innovation"],
+                    salary: { min: 200000, max: 300000 }
+                }
+            }
+        };
+
+        function showPathDetails(level) {
+            // Update active node
+            document.querySelectorAll('.path-node').forEach(node => {
+                node.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Get current industry
+            const industry = document.getElementById('industry').value;
+            const pathData = careerPaths[industry][level];
+
+            // Update details
+            document.getElementById('roleDescription').textContent = pathData.description;
+            
+            const skillsList = document.getElementById('requiredSkills');
+            skillsList.innerHTML = pathData.skills.map(skill => 
+                `<span class="skill-tag">${skill}</span>`
+            ).join('');
+
+            document.getElementById('minSalary').textContent = `$${pathData.salary.min.toLocaleString()}`;
+            document.getElementById('maxSalary').textContent = `$${pathData.salary.max.toLocaleString()}`;
+            
+            const salaryRange = pathData.salary.max - pathData.salary.min;
+            const progress = ((pathData.salary.min - 60000) / (300000 - 60000)) * 100;
+            document.getElementById('salaryProgress').style.width = `${progress}%`;
+
+            document.getElementById('growthOpportunities').textContent = 
+                `This role offers opportunities for ${level === 'leadership' ? 'board positions and industry leadership' : 'further advancement in technical and management roles'}.`;
+        }
+
+        careerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show visualization and details
+            pathVisualization.style.display = 'block';
+            pathDetails.style.display = 'block';
+            aiInsights.style.display = 'block';
+
+            // Show initial path details
+            showPathDetails('current');
+        });
+    </script>
+</body>
+</html> 
