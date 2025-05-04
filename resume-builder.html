@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Builder - Vibe LinkedIn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f2ef;
+        }
+
+        .header {
+            background-color: white;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: #0a66c2;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            color: #0a66c2;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid #0a66c2;
+            border-radius: 4px;
+        }
+
+        .main-content {
+            max-width: 800px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #0a66c2;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            background-color: #0a66c2;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #004182;
+        }
+
+        .ai-suggestions {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .suggestion {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background-color: white;
+            border-radius: 4px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .loading::after {
+            content: "...";
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: "."; }
+            40% { content: ".."; }
+            60%, 100% { content: "..."; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">Vibe LinkedIn</a>
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h1>🤖 AI-Powered Resume Builder</h1>
+        
+        <form id="resumeForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Professional Title</label>
+                <input type="text" id="title" placeholder="e.g., Software Engineer" required>
+            </div>
+
+            <div class="form-group">
+                <label for="experience">Work Experience</label>
+                <textarea id="experience" placeholder="Describe your work experience..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="skills">Skills</label>
+                <input type="text" id="skills" placeholder="e.g., JavaScript, Python, Project Management" required>
+            </div>
+
+            <div class="form-group">
+                <label for="education">Education</label>
+                <textarea id="education" placeholder="Your educational background..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn">Generate Resume</button>
+        </form>
+
+        <div class="loading" id="loading">AI is generating your resume</div>
+
+        <div class="ai-suggestions" id="suggestions" style="display: none;">
+            <h3>AI Suggestions</h3>
+            <div class="suggestion" id="suggestion1">
+                <p>Based on your experience, I recommend highlighting your leadership skills in the summary section.</p>
+            </div>
+            <div class="suggestion" id="suggestion2">
+                <p>Consider adding more specific metrics to quantify your achievements.</p>
+            </div>
+            <div class="suggestion" id="suggestion3">
+                <p>Your skills section could be enhanced with industry-specific certifications.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('resumeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            document.getElementById('loading').style.display = 'block';
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('suggestions').style.display = 'block';
+                
+                // In a real implementation, this would call an AI API
+                // and generate actual suggestions based on the input
+            }, 2000);
+        });
+    </script>
+</body>
+</html> 

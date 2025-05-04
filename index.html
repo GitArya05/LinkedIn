@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn - Professional Network</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f2ef;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: #0a66c2;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            padding: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            color: #0a66c2;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            max-height: 600px;
+        }
+
+        .hero-content {
+            padding-right: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero h1 {
+            color: #0a66c2;
+            margin-bottom: 0.8rem;
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        .profile-showcase {
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+            max-height: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin: 0 auto 1rem;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 0.3rem;
+        }
+
+        .profile-title {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .stat-item {
+            background-color: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0a66c2;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .profile-badges {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            background-color: #e1f3ff;
+            color: #0a66c2;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .connect-btn {
+            background-color: #0a66c2;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            align-self: center;
+        }
+
+        .connect-btn:hover {
+            background-color: #004182;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #0a66c2, #057642);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card h3 {
+            color: #0a66c2;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background-color: #0a66c2;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #004182;
+        }
+
+        /* AI Chat Demo */
+        .ai-chat {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .chat-message {
+            background-color: white;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+        }
+
+        /* Video Resume Demo */
+        .video-demo {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .mic-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #0a66c2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 1rem auto;
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* New Feature Styles */
+        .badge-preview {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .mini-badge {
+            background-color: #e1f3ff;
+            color: #0a66c2;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .connection-preview {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background-color: #f3f2ef;
+            border-radius: 4px;
+        }
+
+        .connection-stat {
+            color: #057642;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .analytics-preview {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .mini-chart {
+            font-size: 1.5rem;
+        }
+
+        .trend-stat {
+            color: #057642;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">LinkedIn</a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#ai">AI Tools</a>
+                <a href="#video">Video Resume</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Welcome to LinkedIn</h1>
+                <p>Your professional network with AI-powered features and modern tools for career growth.</p>
+                <a href="#features" class="btn">Explore Features</a>
+            </div>
+            <div class="profile-showcase">
+                <img src="https://media.licdn.com/dms/image/v2/D4E03AQH5gL9W0rjckQ/profile-displayphoto-shrink_400_400/B4EZZdKhkvHoAg-/0/1745319769578?e=1751500800&v=beta&t=a2uifvbJwKQOfwBGI9Eq25U3nV56K2brqpdI0WPQlDw" alt="Profile Photo" class="profile-image">
+                <h2 class="profile-name">Arya Urkude</h2>
+                <p class="profile-title">CSE Undergrad | CIL scholar</p>
+                <a href="https://www.linkedin.com/in/arya-urkude" target="_blank" style="text-decoration: none; color: #0a66c2; display: block; margin-bottom: 1rem;">
+                    View LinkedIn Profile
+                </a>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Connections</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Posts</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Profile Strength</div>
+                    </div>
+                </div>
+
+                <div class="profile-badges">
+                    <span class="badge">
+                        <i>🎓</i>
+                        Top Student
+                    </span>
+                    <span class="badge">
+                        <i>💡</i>
+                        Innovator
+                    </span>
+                </div>
+
+                <button class="connect-btn">Connect with Me</button>
+            </div>
+        </div>
+
+        <div class="features" id="features">
+            <div class="feature-card" onclick="window.location.href='resume-builder.html'">
+                <h3>🤖 AI-Powered Resume Builder</h3>
+                <p>Let our AI create the perfect resume based on your experience and skills.</p>
+                <button class="btn">Try Now</button>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='job-recommender.html'">
+                <h3>🧠 Smart Job Recommender</h3>
+                <p>Get personalized job recommendations based on your profile and interests.</p>
+                <button class="btn">Find Jobs</button>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='goal-tracker.html'">
+                <h3>🎯 Career Goal Tracker</h3>
+                <p>Set and track your professional goals with our interactive roadmap.</p>
+                <button class="btn">Set Goals</button>
+            </div>
+
+            <!-- New Bonus Features -->
+            <div class="feature-card" onclick="window.location.href='skills-assessment.html'">
+                <h3>🏆 Skills Assessment Hub</h3>
+                <p>Validate your skills through interactive challenges and earn verified badges.</p>
+                <div class="badge-preview">
+                    <span class="mini-badge">Python</span>
+                    <span class="mini-badge">React</span>
+                    <span class="mini-badge">Leadership</span>
+                </div>
+                <button class="btn">Take Assessment</button>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='networking.html'">
+                <h3>🤝 Smart Networking</h3>
+                <p>Connect with professionals who align with your career goals using AI matching.</p>
+                <div class="connection-preview">
+                    <span class="connection-stat">85% match with your interests</span>
+                </div>
+                <button class="btn">Find Connections</button>
+            </div>
+
+            <div class="feature-card" onclick="window.location.href='analytics.html'">
+                <h3>📊 Career Analytics</h3>
+                <p>Get data-driven insights about your career growth and industry trends.</p>
+                <div class="analytics-preview">
+                    <div class="mini-chart">📈</div>
+                    <span class="trend-stat">+25% skill growth</span>
+                </div>
+                <button class="btn">View Insights</button>
+            </div>
+        </div>
+
+        <div class="ai-section" id="ai">
+            <div class="feature-card">
+                <h3>AI Assistant</h3>
+                <p>Chat with our AI to get career advice and resume tips.</p>
+                <div class="ai-chat">
+                    <div class="chat-message">Hi! I'm your AI career assistant. How can I help you today?</div>
+                    <input type="text" placeholder="Type your message..." style="width: 100%; padding: 0.5rem; margin-top: 0.5rem;">
+                </div>
+            </div>
+        </div>
+
+        <div class="video-section" id="video">
+            <div class="feature-card">
+                <h3>📹 Video Resume</h3>
+                <p>Create a professional video introduction to stand out.</p>
+                <div class="video-demo">
+                    <button class="mic-button">🎤</button>
+                    <p>Click to start recording your video resume</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simple demo functionality
+        document.querySelector('.mic-button').addEventListener('click', function() {
+            alert('Video recording feature would be implemented here!');
+        });
+
+        document.querySelector('.ai-chat input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                alert('AI chat feature would be implemented here!');
+                this.value = '';
+            }
+        });
+    </script>
+</body>
+</html> 
